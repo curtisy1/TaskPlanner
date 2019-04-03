@@ -1,0 +1,1 @@
+A simple task planning web app written in React + Typescript, bundled with Webpack and styled with Emotion
