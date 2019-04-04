@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Global, css } from '@emotion/core';
 import { StyledHeader, StyledFooter, StyledSection, StyledTable, StyledTableData, StyledButtonDiv, StyledLabel, StyledInput, StyledSelect, StyledTableHead, StyledLogo } from "./styles";
+import { BarChart, CartesianGrid, XAxis, YAxis, Bar, Tooltip, Legend } from "recharts";
 import Cookies = require("js-cookie");
 
 enum Category {
@@ -55,6 +56,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
         this.renderTasks = this.renderTasks.bind(this);
         this.renderSelect = this.renderSelect.bind(this);
+        this.renderBarChart = this.renderBarChart.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -86,6 +88,17 @@ export default class App extends React.Component<AppProps, AppState> {
         return Object.values(Category).map(option =>
             <option key={option}>{option}</option>
         );
+    }
+
+    renderBarChart(){
+        let uniqueByDate = this.state.tasks.map(t => t.Due.toISOString().slice(0, 10))
+            .filter((value, index, self) => self.indexOf(value) === index);
+        return uniqueByDate.map(date => {
+            return {
+                name: date,
+                due: this.state.tasks.filter(t => t.Due.toISOString().slice(0, 10) === date).length
+            }
+        });
     }
 
     handleClick(){
@@ -151,6 +164,14 @@ export default class App extends React.Component<AppProps, AppState> {
                         </tbody>
                     </StyledTable>
                 </StyledSection>
+                <BarChart width={730} height={250} data={this.renderBarChart()}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="due" fill="#82ca9d" />
+                </BarChart>
                 <StyledFooter>
                     <a href="https://www.oszimt.de" target="_blank">
                         <StyledLogo src={image} className="logo"/>
