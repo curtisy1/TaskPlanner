@@ -1,17 +1,24 @@
 import * as React from "react";
 import { Global, css } from '@emotion/core';
 import { StyledHeader, StyledFooter, StyledSection, StyledTable, StyledTableData, StyledButtonDiv, StyledLabel, StyledInput, StyledSelect, StyledTableHead, StyledLogo } from "./styles";
+import Cookies = require("js-cookie");
 
 enum Category {
     Private = "Privat",
     Work = "Arbeit",
     School = "Schule",
-};
+}
 
 type Task = {
     Task: string;
     Due: Date;
     Category: Category;
+}
+
+type CookeObject = {
+    Task: string;
+    Due: string;
+    Category: string;
 }
 
 interface AppProps {
@@ -21,7 +28,7 @@ interface AppState {
     tasks: Task[];
 }
 
-const image = require("./../Logo.jpg");
+const image = require("./../assets/Logo.jpg");
 
 export default class App extends React.Component<AppProps, AppState> {
     constructor(props: AppProps) {
@@ -49,6 +56,20 @@ export default class App extends React.Component<AppProps, AppState> {
         this.renderTasks = this.renderTasks.bind(this);
         this.renderSelect = this.renderSelect.bind(this);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentDidMount(){
+        const savedCookie = Cookies.getJSON("savedTasks") as CookeObject[];
+        if(!!savedCookie && savedCookie.length > 0){
+            this.setState({ tasks: savedCookie.map((cookieObj) => {
+                return { Task: cookieObj.Task, Due: new Date(cookieObj.Due), Category: cookieObj.Category as any };
+            })
+        });
+        }
+    }
+
+    componentDidUpdate(){
+        Cookies.set("savedTasks", this.state.tasks, { expires: 7, path: '' });
     }
 
     renderTasks() {
