@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Global, css } from '@emotion/core';
 import { StyledHeader, StyledFooter, StyledSection, StyledTable, StyledTableData, StyledButtonDiv, StyledLabel, StyledInput, StyledSelect, StyledTableHead, StyledLogo } from "./styles";
-import { BarChart, CartesianGrid, XAxis, YAxis, Bar, Tooltip, Legend } from "recharts";
+import { BarChart, CartesianGrid, XAxis, YAxis, Bar, Tooltip, Legend, Pie, PieChart } from "recharts";
 import Cookies = require("js-cookie");
 
 enum Category {
@@ -57,6 +57,7 @@ export default class App extends React.Component<AppProps, AppState> {
         this.renderTasks = this.renderTasks.bind(this);
         this.renderSelect = this.renderSelect.bind(this);
         this.renderBarChart = this.renderBarChart.bind(this);
+        this.renderPieChart = this.renderPieChart.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -97,6 +98,16 @@ export default class App extends React.Component<AppProps, AppState> {
             return {
                 name: date,
                 due: this.state.tasks.filter(t => t.Due.toISOString().slice(0, 10) === date).length
+            }
+        });
+    }
+
+    renderPieChart(){
+        const stateCategories = this.state.tasks.map(t => t.Category);
+        return Object.values(Category).map(c => {
+            return {
+                name: c,
+                value: stateCategories.filter(category => category === c as any).length
             }
         });
     }
@@ -172,6 +183,9 @@ export default class App extends React.Component<AppProps, AppState> {
                     <Legend />
                     <Bar dataKey="due" fill="#82ca9d" />
                 </BarChart>
+                <PieChart width={730} height={250}>
+                    <Pie data={this.renderPieChart()} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="#8884d8" label />
+                </PieChart>
                 <StyledFooter>
                     <a href="https://www.oszimt.de" target="_blank">
                         <StyledLogo src={image} className="logo"/>
