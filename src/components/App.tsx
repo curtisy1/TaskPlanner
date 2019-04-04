@@ -48,6 +48,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
         this.renderTasks = this.renderTasks.bind(this);
         this.renderSelect = this.renderSelect.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     renderTasks() {
@@ -64,6 +65,18 @@ export default class App extends React.Component<AppProps, AppState> {
         return Object.values(Category).map(option =>
             <option key={option}>{option}</option>
         );
+    }
+
+    handleClick(){
+        const taskValue = (document.querySelector(".large") as HTMLInputElement).value;
+        const dateValue = (document.querySelector("[name='requiredBy']") as HTMLInputElement).value;
+        const selectValue = (document.querySelector("select") as HTMLSelectElement).value;
+
+        if(!!taskValue && !!dateValue && !!selectValue){
+            this.setState(prevState => ({
+                tasks: [...prevState.tasks, { Task: taskValue, Due: new Date(dateValue), Category: selectValue as any }]
+            }));
+        }
     }
 
     render() {
@@ -100,7 +113,7 @@ export default class App extends React.Component<AppProps, AppState> {
                         </StyledSelect>
                     </div>
                     <StyledButtonDiv className="buttons">
-                        <a href="#" id="btnAddTask">Aufgabe speichern</a>
+                        <a href="#" id="btnAddTask" onClick={this.handleClick}>Aufgabe speichern</a>
                     </StyledButtonDiv>
                 </StyledSection>
                 <StyledSection>
