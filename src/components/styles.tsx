@@ -21,7 +21,7 @@ export const StyledFooter = styled.footer`
     text-align: center;
 `;
 
-export const TableStyles = css({
+const TableStyles = css({
     border: "1px solid #888"
 });
 
@@ -36,13 +36,13 @@ export const StyledTable = styled.table`
 `;
 
 export const StyledTableHead = styled.th`
-    ${TableStyles},
-    backgroundColor: "#53777A",
-    fontSize: "12px",
-    color: "#FFF",
-    fontWeight: "bold",
-    textAlign: "center",
-    lineHeight: "30px"
+    ${TableStyles};
+    background-color: #53777A;
+    font-size: 12px;
+    color: #FFF;
+    font-weight: bold;
+    text-align: center;
+    line-height: 30px;
 `;
 
 export const StyledTableData = styled.td`
@@ -88,5 +88,5 @@ export const StyledSelect = styled.select`
 `;
 
 export const StyledLogo = styled.img`
-    marginTop: "3px"
+    margin-top: 3px;
 `;

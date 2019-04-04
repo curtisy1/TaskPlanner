@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.10",
-    "@emotion/styled": "^10.0.10"
+    "@emotion/styled": "^10.0.10",
+    "url-loader": "^1.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
