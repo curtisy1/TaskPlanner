@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { jsx, css } from '@emotion/core';
+import { css } from '@emotion/core';
 
 export const StyledHeader = styled.header`
     background-color: #d1e0e1;
@@ -35,14 +35,15 @@ export const StyledTable = styled.table`
     width: 90%;
 `;
 
-export const TableHeaderStyles = css({
+export const StyledTableHead = styled.th`
+    ${TableStyles},
     backgroundColor: "#53777A",
     fontSize: "12px",
     color: "#FFF",
     fontWeight: "bold",
     textAlign: "center",
     lineHeight: "30px"
-});
+`;
 
 export const StyledTableData = styled.td`
     ${TableStyles};
@@ -51,7 +52,7 @@ export const StyledTableData = styled.td`
     padding-left: 10px;
 `;
 
-export const StyledButton = styled.button`
+export const StyledButtonDiv = styled.div`
     margin: 15px 0px 10px 0px;
     a {
         background-color: #53777A;
@@ -75,7 +76,7 @@ export const StyledInput = styled.input`
     border: 1px solid #AAA;
     height: 24px;
     padding: 0 7px;
-    .large {
+    &.large {
         width: 400px;
     }
 `;
@@ -86,6 +87,6 @@ export const StyledSelect = styled.select`
     width: 200px;
 `;
 
-export const StyledLogo = css({
+export const StyledLogo = styled.img`
     marginTop: "3px"
-});
+`;

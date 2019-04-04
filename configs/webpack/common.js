@@ -22,6 +22,10 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', { loader: 'css-loader', options: { importLoaders: 1 } }],
       },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: 'file-loader',
+      },
     ],
   },
   plugins: [
